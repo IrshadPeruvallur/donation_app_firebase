@@ -33,11 +33,23 @@ class HomePage extends StatelessWidget {
             }
             List<QueryDocumentSnapshot<DonorModel>> donatorDocs =
                 snapshot.data?.docs ?? [];
-            return ListView.builder(
+            return ListView.separated(
+              separatorBuilder: (context, index) => SizedBox(
+                height: 10,
+              ),
               itemCount: donatorDocs.length,
               itemBuilder: (context, index) {
                 DonorModel donor = donatorDocs[index].data();
-                return Text(donor.name!);
+                return ListTile(
+                  tileColor: const Color.fromARGB(255, 43, 43, 43),
+                  title: Text(
+                    donor.name!.toUpperCase(),
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  subtitle: Text(
+                    donor.phone!.toString(),
+                  ),
+                );
               },
             );
           },
@@ -52,7 +64,7 @@ class HomePage extends StatelessWidget {
                   builder: (context) => AddDonorPage(),
                 ));
           },
-          label: Text("Add Donor")),
+          label: Text("Add")),
     );
   }
 }
