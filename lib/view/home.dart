@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:blood_donation_app/controller/donor_provider.dart';
 import 'package:blood_donation_app/model/donor_model.dart';
+import 'package:blood_donation_app/view/add_donor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Blood Donation App'),
+      ),
       body: Consumer<DonorProvider>(builder: (context, value, child) {
         return StreamBuilder<QuerySnapshot<DonorModel>>(
           stream: value.getData(),
@@ -39,6 +43,16 @@ class HomePage extends StatelessWidget {
           },
         );
       }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddDonorPage(),
+                ));
+          },
+          label: Text("Add Donor")),
     );
   }
 }

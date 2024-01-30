@@ -8,7 +8,7 @@ class DonorProvider extends ChangeNotifier {
     return donorService.donorRef.snapshots();
   }
 
-  addDonor(id, DonorModel data) async {
+  addDonor(DonorModel data) async {
     await donorService.donorRef.add(data);
     notifyListeners();
   }

@@ -1,5 +1,6 @@
 import 'package:blood_donation_app/controller/donor_provider.dart';
-import 'package:blood_donation_app/firebase_options.dart';
+import 'package:blood_donation_app/controller/widgets_provider.dart';
+import 'package:blood_donation_app/service/firebase_options.dart';
 import 'package:blood_donation_app/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,9 +20,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => DonorProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => DonorProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => WidgetsProvider(),
+        ),
+      ],
       child: MaterialApp(
+        theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         home: HomePage(),
       ),
