@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "312829297511",
+    "project_id": "blood-donation-68ad6",
+    "storage_bucket": "blood-donation-68ad6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312829297511:android:13546411985d5eb8c2a5c2",
+        "android_client_info": {
+          "package_name": "com.example.blood_donation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5wqgsvsEygb7dbbtLoQzqlFztTW5h0Xk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312829297511:android:5818076a9631633ac2a5c2",
+        "android_client_info": {
+          "package_name": "com.example.blood_donation_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5wqgsvsEygb7dbbtLoQzqlFztTW5h0Xk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
