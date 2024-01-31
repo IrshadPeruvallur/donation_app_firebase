@@ -12,4 +12,14 @@ class DonorProvider extends ChangeNotifier {
     await donorService.donorRef.add(data);
     notifyListeners();
   }
+
+  updateDonor(id, DonorModel data) {
+    donorService.donorRef.doc(id).update(data.toJson());
+    notifyListeners();
+  }
+
+  deleteDonor(id) {
+    donorService.donorRef.doc(id).delete();
+    notifyListeners();
+  }
 }

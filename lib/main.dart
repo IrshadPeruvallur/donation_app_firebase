@@ -1,9 +1,13 @@
+
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:blood_donation_app/controller/donor_provider.dart';
+import 'package:blood_donation_app/controller/pages_provider/add_edit_provider.dart';
 import 'package:blood_donation_app/controller/widgets_provider.dart';
 import 'package:blood_donation_app/service/firebase_options.dart';
-import 'package:blood_donation_app/view/home.dart';
-import 'package:flutter/material.dart';
+import 'package:blood_donation_app/view/display/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -27,6 +31,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => WidgetsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AddEditProvider(),
         ),
       ],
       child: MaterialApp(

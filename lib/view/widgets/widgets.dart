@@ -28,29 +28,28 @@ class AddWidgets {
   Widget dropDownButton() {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
-      child: Consumer<WidgetsProvider>(builder: (context, value, child) {
+      child: Consumer<WidgetsProvider>(builder: (context, widgetvalue, child) {
         return DropdownButtonFormField(
           validator: (value) {
-              if (value == null || value.isEmpty) {
-            return "Please Enter";
-          } else {
-            return null;
-          }
+            if (value == null || value.isEmpty) {
+              return "Please Enter";
+            } else {
+              return null;
+            }
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15))),
               label: Text("Select Blood Group")),
-          value: value.selectedItem,
-          items: value.items
+          value: widgetvalue.selectedItem,
+          items: widgetvalue.items
               .map((item) => DropdownMenuItem<String>(
-                    child: Text(item),
                     value: item,
+                    child: Text(item),
                   ))
               .toList(),
           onChanged: (value) {
-            Provider.of<WidgetsProvider>(context, listen: false)
-                .dropDownItem(value);
+            widgetvalue.dropDownItem(value);
           },
         );
       }),

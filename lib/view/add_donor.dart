@@ -1,47 +1,78 @@
-import 'package:blood_donation_app/controller/donor_provider.dart';
+// ignore_for_file: use_key_in_widget_constructors
+
+import 'package:blood_donation_app/controller/pages_provider/add_edit_provider.dart';
 import 'package:blood_donation_app/controller/widgets_provider.dart';
-import 'package:blood_donation_app/model/donor_model.dart';
 import 'package:blood_donation_app/view/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddDonorPage extends StatelessWidget {
-  AddDonorPage({Key? key});
+class AddDonorPage extends StatefulWidget {
+  final String? name;
+  final String? group;
+  final int? phone;
+  final int? age;
+  final String? id;
+  const AddDonorPage(
+      {Key? key, this.name, this.group, this.phone, this.age, this.id});
 
-  final TextEditingController nameCntlr = TextEditingController();
-  final TextEditingController ageCntlr = TextEditingController();
-  final TextEditingController groupCntlr = TextEditingController();
-  final TextEditingController phoneCntlr = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  @override
+  State<AddDonorPage> createState() => _AddDonorPageState();
+}
+
+class _AddDonorPageState extends State<AddDonorPage> {
+  @override
+  void initState() {
+    final getProvider = Provider.of<AddEditProvider>(context, listen: false);
+    final getWidgetProvider =
+        Provider.of<WidgetsProvider>(context, listen: false);
+    getProvider.nameCntlr = TextEditingController(
+      text: widget.name,
+    );
+    getProvider.phoneCntlr = TextEditingController(
+      text: widget.phone.toString(),
+    );
+    getProvider.ageCntlr = TextEditingController(
+      text: widget.age.toString(),
+    );
+    getWidgetProvider.selectedItem = widget.group;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final getProvider = Provider.of<AddEditProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Details"),
+        title: Text(getProvider.isEdit ? "Edit Details" : "Add Details"),
       ),
       body: Form(
-        key: formKey,
+        key: getProvider.formKey,
         child: Padding(
           padding: const EdgeInsets.all(28.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                AddWidgets().textFormField('Name', nameCntlr),
-                AddWidgets().textFormField('Age', ageCntlr),
-                AddWidgets().textFormField('Phone', phoneCntlr),
+                AddWidgets().textFormField('Name', getProvider.nameCntlr),
+                AddWidgets().textFormField('Age', getProvider.ageCntlr),
+                AddWidgets().textFormField('Phone', getProvider.phoneCntlr),
                 AddWidgets().dropDownButton(),
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: ElevatedButton(
-                      style: ButtonStyle(
+                      style: const ButtonStyle(
                           fixedSize: MaterialStatePropertyAll(Size(500, 50))),
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          addDonor(context);
-                          Navigator.pop(context);
+                        if (getProvider.formKey.currentState!.validate()) {
+                          if (getProvider.isEdit) {
+                            getProvider.updateDonor(widget.id);
+                            Navigator.pop(context);
+                          } else {
+                            getProvider.addDonor(context);
+                            Navigator.pop(context);
+                          }
                         }
                       },
-                      child: Text("Submit")),
+                      child: Text(getProvider.isEdit ? "Update" : "Submit")),
                 )
               ],
             ),
@@ -49,17 +80,5 @@ class AddDonorPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  addDonor(context) {
-    final getPrv = Provider.of<DonorProvider>(context, listen: false);
-    final getWidgetPrv = Provider.of<WidgetsProvider>(context, listen: false);
-    final data = DonorModel(
-        age: int.parse(ageCntlr.text),
-        group: getWidgetPrv.selectedItem,
-        name: nameCntlr.text,
-        phone: int.parse(phoneCntlr.text));
-
-    getPrv.addDonor(data);
   }
 }
