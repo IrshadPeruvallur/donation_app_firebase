@@ -20,6 +20,7 @@ class AddEditProvider extends ChangeNotifier {
         phone: int.parse(phoneCntlr.text));
 
     _donorProvider.addDonor(data);
+    clearTextFields();  
     notifyListeners();
   }
 
@@ -30,6 +31,22 @@ class AddEditProvider extends ChangeNotifier {
         name: nameCntlr.text,
         phone: int.parse(phoneCntlr.text));
     _donorProvider.updateDonor(id, data);
+    clearTextFields();
     notifyListeners();
+  }
+
+  clearTextFields() {
+    nameCntlr.clear();
+    ageCntlr.clear();
+    phoneCntlr.clear();
+    _widgetsProvider.selectedItem = null;
+    notifyListeners();
+  }
+
+  loadDatasToEdit(name, phone, age, group) {
+    nameCntlr = TextEditingController(text: name);
+    phoneCntlr = TextEditingController(text: phone?.toString() ?? '');
+    ageCntlr = TextEditingController(text: age?.toString() ?? '');
+    _widgetsProvider.selectedItem = group;
   }
 }

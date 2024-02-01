@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:blood_donation_app/controller/donor_provider.dart';
-import 'package:blood_donation_app/controller/pages_provider/add_edit_provider.dart';
+import 'package:blood_donation_app/controller/add_edit_provider.dart';
 import 'package:blood_donation_app/model/donor_model.dart';
 import 'package:blood_donation_app/view/add_edit/add_edit_donor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,7 +1,7 @@
-import 'package:blood_donation_app/controller/pages_provider/add_edit_provider.dart';
-import 'package:blood_donation_app/controller/widgets_provider.dart';
+import 'package:blood_donation_app/controller/add_edit_provider.dart';
 import 'package:blood_donation_app/view/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddEditDonorPage extends StatefulWidget {
@@ -27,20 +27,14 @@ class AddEditDonorPage extends StatefulWidget {
 class _AddEditDonorPageState extends State<AddEditDonorPage> {
   @override
   void initState() {
-    final addEditProvider = Provider.of<AddEditProvider>(context, listen: false);
-    final widgetsProvider = Provider.of<WidgetsProvider>(context, listen: false);
-
-    addEditProvider.nameCntlr = TextEditingController(text: widget.name);
-    addEditProvider.phoneCntlr = TextEditingController(text: widget.phone?.toString() ?? '');
-    addEditProvider.ageCntlr = TextEditingController(text: widget.age?.toString() ?? '');
-    widgetsProvider.selectedItem = widget.group;
-
+    Provider.of<AddEditProvider>(context, listen: false)
+        .loadDatasToEdit(widget.name, widget.phone, widget.age, widget.group);
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-    final addEditProvider = Provider.of<AddEditProvider>(context, listen: false);
+    final addEditProvider =
+        Provider.of<AddEditProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -54,16 +48,38 @@ class _AddEditDonorPageState extends State<AddEditDonorPage> {
             child: Column(
               children: [
                 Consumer<AddEditProvider>(
-                  builder: (context, value, child) => AddWidgets().textFormField('Name', value.nameCntlr),
+                  builder: (context, value, child) =>
+                      AddWidgets().textFormField(
+                    'Name',
+                    value.nameCntlr,
+                    formatters: FilteringTextInputFormatter.allow(
+                        RegExp(r'[a-zA-Z\s]')),
+                  ),
                 ),
                 Consumer<AddEditProvider>(
-                  builder: (context, value, child) => AddWidgets().textFormField('Age', value.ageCntlr),
+                  builder: (context, value, child) =>
+                      AddWidgets().textFormField(
+                    'Age',
+                    maxLength: 2,
+                    value.ageCntlr,
+                    formatters: FilteringTextInputFormatter.digitsOnly,
+                    inputType: TextInputType.number,
+                  ),
                 ),
                 Consumer<AddEditProvider>(
-                  builder: (context, value, child) => AddWidgets().textFormField('Phone', value.phoneCntlr),
+                  builder: (context, value, child) =>
+                      AddWidgets().textFormField(
+                    'Phone',
+                    prefixText: '+91',
+                    maxLength: 10,
+                    value.phoneCntlr,
+                    formatters: FilteringTextInputFormatter.digitsOnly,
+                    inputType: TextInputType.phone,
+                  ),
                 ),
                 Consumer<AddEditProvider>(
-                  builder: (context, value, child) => AddWidgets().dropDownButton(),
+                  builder: (context, value, child) =>
+                      AddWidgets().dropDownButton(),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20),

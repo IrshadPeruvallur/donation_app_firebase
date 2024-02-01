@@ -1,9 +1,14 @@
 import 'package:blood_donation_app/controller/widgets_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddWidgets {
-  Widget textFormField(label, controller) {
+  Widget textFormField(label, controller,
+      {int? maxLength,
+      String? prefixText,
+      TextInputFormatter? formatters,
+      TextInputType? inputType}) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: TextFormField(
@@ -14,8 +19,12 @@ class AddWidgets {
             return null;
           }
         },
+        keyboardType: inputType,
+        maxLength: maxLength,
+        inputFormatters: [formatters!],
         controller: controller,
         decoration: InputDecoration(
+          prefixText: prefixText,
           labelText: label,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),

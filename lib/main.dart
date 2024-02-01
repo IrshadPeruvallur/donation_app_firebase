@@ -2,7 +2,7 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:blood_donation_app/controller/donor_provider.dart';
-import 'package:blood_donation_app/controller/pages_provider/add_edit_provider.dart';
+import 'package:blood_donation_app/controller/add_edit_provider.dart';
 import 'package:blood_donation_app/controller/widgets_provider.dart';
 import 'package:blood_donation_app/service/firebase_options.dart';
 import 'package:blood_donation_app/view/display/home.dart';
