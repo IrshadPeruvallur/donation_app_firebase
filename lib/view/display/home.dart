@@ -9,8 +9,7 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  final CollectionReference items =
-      FirebaseFirestore.instance.collection('doner');
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
