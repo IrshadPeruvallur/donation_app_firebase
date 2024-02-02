@@ -1,4 +1,5 @@
 import 'package:blood_donation_app/controller/add_edit_provider.dart';
+import 'package:blood_donation_app/controller/widgets_provider.dart';
 import 'package:blood_donation_app/view/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,8 +30,10 @@ class _AddEditDonorPageState extends State<AddEditDonorPage> {
   void initState() {
     Provider.of<AddEditProvider>(context, listen: false)
         .loadDatasToEdit(widget.name, widget.phone, widget.age, widget.group);
+   
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final addEditProvider =
@@ -47,6 +50,7 @@ class _AddEditDonorPageState extends State<AddEditDonorPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                AddWidgets().circleImage(context),
                 Consumer<AddEditProvider>(
                   builder: (context, value, child) =>
                       AddWidgets().textFormField(
@@ -78,15 +82,13 @@ class _AddEditDonorPageState extends State<AddEditDonorPage> {
                   ),
                 ),
                 Consumer<AddEditProvider>(
-                  builder: (context, value, child) =>
-                      AddWidgets().dropDownButton(),
+                  builder: (context, value, child) => AddWidgets()
+                      .dropDownButton(
+                              value.selectedItem),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: ElevatedButton(
-                    style: const ButtonStyle(
-                      fixedSize: MaterialStatePropertyAll(Size(500, 50)),
-                    ),
                     onPressed: () {
                       if (addEditProvider.formKey.currentState!.validate()) {
                         if (addEditProvider.isEdit) {

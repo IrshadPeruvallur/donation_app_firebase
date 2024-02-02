@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:blood_donation_app/controller/donor_provider.dart';
 import 'package:blood_donation_app/controller/add_edit_provider.dart';
+import 'package:blood_donation_app/controller/image_provider.dart';
 import 'package:blood_donation_app/model/donor_model.dart';
 import 'package:blood_donation_app/view/add_edit/add_edit_donor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +42,23 @@ class HomePage extends StatelessWidget {
                 DonorModel donor = donatorDocs[index].data();
                 final id = donatorDocs[index].id;
                 return ListTile(
+                  leading:
+                      Consumer<ImgProvider>(builder: (context, value, child) {
+                    return FutureBuilder(
+                        future: Future.value(value.file),
+                        builder: (context, snapshot) {
+                          return Container(
+                            width: 50,
+                            height: 050,
+                            decoration: BoxDecoration(
+                                // image: DecorationImage(fit: BoxFit.cover,
+                                //     image: FileImage(snapshot.data!)),
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                          );
+                        });
+                  }),
                   trailing: PopupMenuButton(
                     onSelected: (value) {
                       if (value == "Edit") {
